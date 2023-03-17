@@ -1,10 +1,20 @@
-let port = 8080;
-const http = require("http");
-console.log(`Starting server on port ${port}`);
-http.createServer((request, response) => {
-  request.setEncoding('utf8');
-  console.log('REQUEST METHOD: ', request.method);
-  let datStr = '';
-  request.on('data', chunk => { datStr = datStr + chunk });
-  request.on('end', () => { console.log('End of DATA: ', datStr) })
-}).listen(port);
+
+const express = require('express');
+const app = express();
+app.use(express.json())
+const port = 8080;
+
+app.post("/action", (req, res, next) => {
+  console.log("posted " + req.body.first)
+  res.sendStatus(200);
+});
+
+app.get('/', (req, res) => {
+  res.json(["1", "e"]);
+});
+
+app.listen(port, () => {
+  console.log(`Starting server on port ${port}`);
+});
+
+
